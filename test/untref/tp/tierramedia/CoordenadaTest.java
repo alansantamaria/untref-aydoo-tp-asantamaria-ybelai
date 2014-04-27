@@ -53,7 +53,7 @@ public class CoordenadaTest {
 	@Test
 	public void equalsDebeDevolverTrueSiDosCoordenadasSonIguales() {
 		Coordenada coordenada1 = new Coordenada(5,5);
-		Coordenada coordenada2 = new Coordenada(1,5);
+		Coordenada coordenada2 = new Coordenada(5,5);
 		Assert.assertTrue(coordenada1.equals(coordenada2));
 	}
 }
