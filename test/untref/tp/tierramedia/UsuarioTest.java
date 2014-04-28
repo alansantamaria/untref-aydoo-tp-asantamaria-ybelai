@@ -21,7 +21,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void deberiaDevolverPerezSiSuContraseñaEsPerez(){
+	public void deberiaDevolverPerezSiSuContraseniaEsPerez(){
 		
 		Assert.assertEquals("Perez", usuario.getContrasenia());
 				
@@ -35,7 +35,7 @@ public class UsuarioTest {
 				
 	}
 	@Test
-	public void deberiaDevolverDiazSiCambiaContraseñaADiaz(){
+	public void deberiaDevolverDiazSiCambiacontraseniaADiaz(){
 				
 		usuario.setContrasenia("Diaz");
 		Assert.assertEquals("Diaz", usuario.getContrasenia());
