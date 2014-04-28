@@ -31,7 +31,7 @@ public class UsuarioTest {
 	public void deberiaDevolverPedroSiCambiaNombreAPedro(){
 				
 		usuario.setNombreUsuario("Pedro");
-		Assert.assertEquals("Pedro", usuario.getContrasenia());
+		Assert.assertEquals("Pedro", usuario.getNombreUsuario());
 				
 	}
 	@Test
