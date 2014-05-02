@@ -1,7 +1,5 @@
 package untref.tp.tierramedia;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.List;
 public class CreadorDeSugerencias {
 	private List<Atraccion> atracciones;
 	private List<Promocion> promociones;
-	private int distanciaMaxima = 10;
+	private final int distanciaMaxima = 10;
 
 	/*
 	 * @param  atracciones lista con todas las atracciones disponibles
@@ -20,10 +18,18 @@ public class CreadorDeSugerencias {
 		this.atracciones = atracciones;
 		this.promociones = promociones;
 	}
-
+	
+	/*La sugerencia se genera de la siguiente manera:
+	 *1) se ordenan las atracciones de menor a mayor precio.
+	 *2) se descartan aquellas atracciones que no son preferidas por el usuario.
+	 *3) se descartan aquellas atracciones que se encuentran fuera de una distancia establecida respecto a la ubicación del usuario.
+	 *4) se separan las atracciones restantes en dos grupos: las que tienen descuento por promoción y las que no. 
+	 *5) se agregan primero las atracciones con descuento controlando que la sumatoria no sobrepase el presupuesto del usuario y el tiempo disponible.
+	 *6) si aún hay presupuesto y tiempo disponible se siguen agregando atracciones sin descuentos a la sugerencia.
+	 */
 	public List<Atraccion> generarSugerencia(Usuario usuario) {
 		List<Atraccion> atraccionesPreSeleccionadas = atracciones;
-		ordenarAtraccionesPorPrecio(atraccionesPreSeleccionadas);
+		Utils.ordenarAtraccionesPorPrecio(atraccionesPreSeleccionadas);
 		filtrarPorTipoDeAtraccionPreferidaDelUsuario(usuario.getPerfil().getTipoDeAtraccionFavorita(), atraccionesPreSeleccionadas);
 		filtrarPorCercania(usuario.getPerfil().getUbicacion(), atraccionesPreSeleccionadas);
 		List<Atraccion> atraccionesConDescuento = getAtraccionesConDescuento(atraccionesPreSeleccionadas);
@@ -55,20 +61,6 @@ public class CreadorDeSugerencias {
 		return atraccionesSeleccionadas;
 	}
 
-	public void ordenarAtraccionesPorPrecio(List<Atraccion> atracciones) {
-		Collections.sort(atracciones, new Comparator<Atraccion>() {
-			public int compare(Atraccion o1, Atraccion o2) {
-				if (o1.getCosto() == o2.getCosto())
-					return 0;
-				else if (o1.getCosto() < o2.getCosto()) {
-					return -1;
-				}else{
-					return 1;
-				}
-			}
-		});	
-
-	}
 
 	private void filtrarPorTipoDeAtraccionPreferidaDelUsuario(EnumTipoDeAtraccion tipo, List<Atraccion> atracciones) {
 		Iterator<Atraccion> iter = atracciones.iterator();
@@ -84,7 +76,7 @@ public class CreadorDeSugerencias {
 		Iterator<Atraccion> iter = atracciones.iterator();
 		while (iter.hasNext()) {
 			Atraccion atraccion = iter.next();
-			if (distanciaMaxima < Math.abs(atraccion.getPosicionamiento().getX() - ubicacion.getX()) && distanciaMaxima < Math.abs(atraccion.getPosicionamiento().getX() - ubicacion.getX())) {
+			if (distanciaMaxima < Utils.getDistanciaEntreCoordenadas(ubicacion, atraccion.getPosicionamiento())) {
 				iter.remove();
 			}
 		}
@@ -103,20 +95,5 @@ public class CreadorDeSugerencias {
 		}
 		return atraccionesConDescuento;
 	}
-
-	/*private void getAtraccionesGratisYLasRequeridasSegunPromocion(List<Atraccion> atracciones) {
-	List<Atraccion> atraccionesConPromocionesAxB = new LinkedList<Atraccion>();
-	for (Promocion promocion : promociones) {
-		if (promocion instanceof PromocionAXB) {
-			for (Atraccion atraccion : atracciones) {
-				if (((PromocionAXB) promocion).getAtraccionesRequeridas().contains(atraccion)) {
-					atraccionesConPromocionesAxB.add(atraccion);
-					atraccionesConPromocionesAxB.addAll(((PromocionAXB) promocion).getAtraccionesRequeridas());
-				}
-			}
-		}
-	}
-}*/
-
-
+	
 }
