@@ -22,10 +22,10 @@ public class CreadorDeSugerencias {
 	/*La sugerencia se genera de la siguiente manera:
 	 *1) se ordenan las atracciones de menor a mayor precio.
 	 *2) se descartan aquellas atracciones que no son preferidas por el usuario.
-	 *3) se descartan aquellas atracciones que se encuentran fuera de una distancia establecida respecto a la ubicación del usuario.
-	 *4) se separan las atracciones restantes en dos grupos: las que tienen descuento por promoción y las que no. 
+	 *3) se descartan aquellas atracciones que se encuentran fuera de una distancia establecida respecto a la ubicacion del usuario.
+	 *4) se separan las atracciones restantes en dos grupos: las que tienen descuento por promocion y las que no. 
 	 *5) se agregan primero las atracciones con descuento controlando que la sumatoria no sobrepase el presupuesto del usuario y el tiempo disponible.
-	 *6) si aún hay presupuesto y tiempo disponible se siguen agregando atracciones sin descuentos a la sugerencia.
+	 *6) si aun hay presupuesto y tiempo disponible se siguen agregando atracciones sin descuentos a la sugerencia.
 	 */
 	public List<Atraccion> generarSugerencia(Usuario usuario) {
 		List<Atraccion> atraccionesPreSeleccionadas = atracciones;

@@ -8,9 +8,10 @@ public class UsuarioTest {
 
 	
 	Coordenada ubicacion = new Coordenada(20, 30);
+	Coordenada domicilio = new Coordenada(20, 30);
 	EnumTipoDeAtraccion tipoDeAtraccionFavorita = EnumTipoDeAtraccion.DEGUSTACION;
 	Perfil perfil = new Perfil(1000, 20, 100, tipoDeAtraccionFavorita,
-			ubicacion);
+			ubicacion, domicilio);
 	Usuario usuario = new Usuario("Jose", "Perez", perfil);
 	@Test
 	public void deberiaDevolverJoseSiSeLlamaJose(){

@@ -22,7 +22,7 @@ public class CreadorDeSugerenciasTest {
 		atracciones.add(a4);
 		atracciones.add(a5);
 
-		Perfil perfil = new Perfil(200, 300, 0, EnumTipoDeAtraccion.AVENTURA,new Coordenada(1, 9));
+		Perfil perfil = new Perfil(200, 300, 0, EnumTipoDeAtraccion.AVENTURA, new Coordenada(1, 9), new Coordenada(1, 9));
 		Usuario usuario = new Usuario("test", "123", perfil);
 
 		List<Atraccion> atraccionesConDescuento = new LinkedList<Atraccion>();

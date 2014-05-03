@@ -4,11 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class PerfilTest {
-
+	
 	Coordenada ubicacion = new Coordenada(20, 30);
+	Coordenada domicilio = new Coordenada(20, 30);
 	EnumTipoDeAtraccion tipoDeAtraccionFavorita = EnumTipoDeAtraccion.DEGUSTACION;
 	Perfil perfil1 = new Perfil(1000, 20, 100, tipoDeAtraccionFavorita,
-			ubicacion);
+			ubicacion, domicilio);
 
 	@Test
 	public void deberiaDevolver20SiTiempoDisponibleParaVisitasEs20() {
