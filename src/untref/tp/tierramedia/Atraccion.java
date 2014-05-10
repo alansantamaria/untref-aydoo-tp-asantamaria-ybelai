@@ -7,6 +7,7 @@ public class Atraccion {
 	private int tiempo;
 	private Coordenada posicionamiento;
 	private int cupoDeVisitantesDiarios;
+	private boolean seAplicoPromocion = false;
 	
 	public Atraccion(String nombre, EnumTipoDeAtraccion tipo, double costo, int tiempo,
 			Coordenada posicionamiento, int cupoDeVisitantesDiarios) {
@@ -65,5 +66,14 @@ public class Atraccion {
 	public void setCupoDeVisitantesDiarios(int cupoDeVisitantesDiarios) {
 		this.cupoDeVisitantesDiarios = cupoDeVisitantesDiarios;
 	}
+
+	public boolean seAplicoPromocion() {
+		return seAplicoPromocion;
+	}
+
+	public void setSeAplicoPromocion(boolean seAplicoPromocion) {
+		this.seAplicoPromocion = seAplicoPromocion;
+	}
+	
 	
 }

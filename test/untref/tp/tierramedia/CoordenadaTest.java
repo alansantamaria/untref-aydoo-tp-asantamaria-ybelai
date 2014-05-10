@@ -56,4 +56,13 @@ public class CoordenadaTest {
 		Coordenada coordenada2 = new Coordenada(5,5);
 		Assert.assertTrue(coordenada1.equals(coordenada2));
 	}
+	
+	@Test
+	public void laDistanciaDebeSerRaizDeDosParaLasCoordenadasX1Y1X2Y2() {
+		Coordenada c1 = new Coordenada(1, 1);
+		Coordenada c2 = new Coordenada(2, 2);
+		Double distancia = 1.41;
+		Assert.assertEquals(distancia, c1.getDistanciaEntreCoordenadas(c2), 001);
+	}
+	
 }

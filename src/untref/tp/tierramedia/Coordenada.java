@@ -28,5 +28,13 @@ public class Coordenada {
 			return false;
 		}
 	}
+	
+	public double getDistanciaEntreCoordenadas (Coordenada c) {
+		return  Math.hypot(getX() - c.getX(), getY() - c.getY());
+	}
+	
+	public double getTiempoTransladoEntreCoordenadas (Coordenada c, int velocidadTransladoDelUsuario) {
+		return velocidadTransladoDelUsuario * getDistanciaEntreCoordenadas(c);
+	}
 
 }

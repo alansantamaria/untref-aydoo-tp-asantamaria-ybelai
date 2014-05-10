@@ -1,12 +1,13 @@
 package untref.tp.tierramedia;
 
+import java.util.Date;
 import java.util.List;
 
 public class PromocionPorcentual extends Promocion {
 	private double porcentaje;
 	private List<Atraccion> atracciones;
 
-	public PromocionPorcentual(int vigencia, List<Atraccion> atracciones, double porcentaje) {
+	public PromocionPorcentual(Date vigencia, List<Atraccion> atracciones, double porcentaje) {
 		super(vigencia);
 		this.atracciones = atracciones;
 		this.porcentaje = porcentaje;
@@ -33,7 +34,8 @@ public class PromocionPorcentual extends Promocion {
 	}
 	
 	public Atraccion calcularDescuento(Atraccion atraccion) {
-		 atraccion.setCosto((atraccion.getCosto()) + ((atraccion.getCosto() * porcentaje) / 100));
+		 atraccion.setCosto((atraccion.getCosto()) - ((atraccion.getCosto() * porcentaje) / 100));
+		 atraccion.setSeAplicoPromocion(true);
 		 return atraccion;
 	}
 }

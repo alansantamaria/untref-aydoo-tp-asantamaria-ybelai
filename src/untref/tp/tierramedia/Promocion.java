@@ -1,19 +1,25 @@
 package untref.tp.tierramedia;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public abstract class Promocion {
-	private int vigencia;
+	private Date vigencia;
 	
-	public Promocion(int vigencia) {
+	public Promocion(Date vigencia) {
 		this.vigencia = vigencia;
 	}
 
-	public int getVigencia() {
+	public Date getVigencia() {
 		return vigencia;
 	}
 
-	public void setVigencia(int vigencia) {
+	public void setVigencia(Date vigencia) {
 		this.vigencia = vigencia;
 	}
 	
+	public boolean estaVigente() {
+		return Calendar.getInstance().getTime().after(vigencia) ;
+	}
 }
