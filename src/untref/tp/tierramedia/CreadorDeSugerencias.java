@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import untref.tp.tierramedia.excepciones.VelocidadDeTrasladoCeroException;
+
 
 public class CreadorDeSugerencias {
 	private List<Atraccion> atracciones;
@@ -26,11 +28,13 @@ public class CreadorDeSugerencias {
 		this.promocionesAXB = promocionesAXB;
 	}
 
-	public Paquete getPaquete(Usuario usuario) {
+	public Paquete getPaquete(Usuario usuario) throws Exception {
 
 		Paquete paquete = new Paquete();
+		
 		List<Atraccion> atraccionesSugeridas = getSugerenciasParaVisitar(usuario);
 		aplicarDescuentoPorcentualAAtracciones(atraccionesSugeridas);
+		
 		List<Atraccion> atraccionesGratisPorPromocionAXB = getPromocionesGratisPorAXB(atraccionesSugeridas);
 
 		agregarAtraccionesSugeridasAlPaquete(paquete, atraccionesSugeridas, usuario.getPerfil());
@@ -133,12 +137,12 @@ public class CreadorDeSugerencias {
 		return atraccionesGratis;
 	}
 
-	private void agregarAtraccionesSugeridasAlPaquete(Paquete paquete, List<Atraccion> atraccionesSugeridas, Perfil perfil) {
+	private void agregarAtraccionesSugeridasAlPaquete(Paquete paquete, List<Atraccion> atraccionesSugeridas, Perfil perfil) throws VelocidadDeTrasladoCeroException {
 		ListIterator<Atraccion> iter = atraccionesSugeridas.listIterator();
 		while (iter.hasNext()) {
 			Atraccion atraccion = iter.next();
 			if (iter.hasPrevious()) {
-				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTransladoEntreCoordenadas(atracciones.get(iter.previousIndex()).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
+				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(atracciones.get(iter.previousIndex()).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
 			}else{
 				paquete.addAtraccion(atraccion, 0.0);
 			}
@@ -151,12 +155,12 @@ public class CreadorDeSugerencias {
 		}
 	}
 
-	private void agregarAtraccionesGratisPorPromocionesAXB(Paquete paquete, List<Atraccion> atraccionesGratisPorPromocionAXB, Perfil perfil) {
+	private void agregarAtraccionesGratisPorPromocionesAXB(Paquete paquete, List<Atraccion> atraccionesGratisPorPromocionAXB, Perfil perfil) throws VelocidadDeTrasladoCeroException {
 		ListIterator<Atraccion> iter = atraccionesGratisPorPromocionAXB.listIterator();
 		while (iter.hasNext()) {
 			Atraccion atraccion = iter.next();
 			if (!paquete.getAtracciones().isEmpty()) {
-				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTransladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
+				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
 			}else{
 				paquete.addAtraccion(atraccion, 0.0);
 			}

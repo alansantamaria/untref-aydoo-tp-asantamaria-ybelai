@@ -1,5 +1,7 @@
 package untref.tp.tierramedia;
 
+import untref.tp.tierramedia.excepciones.VelocidadDeTrasladoCeroException;
+
 public class Coordenada {
 	int x;
 	int y;
@@ -33,8 +35,12 @@ public class Coordenada {
 		return  Math.hypot(getX() - c.getX(), getY() - c.getY());
 	}
 	
-	public double getTiempoTransladoEntreCoordenadas (Coordenada c, int velocidadTransladoDelUsuario) {
-		return velocidadTransladoDelUsuario * getDistanciaEntreCoordenadas(c);
+	public double getTiempoTrasladoEntreCoordenadas (Coordenada c, int velocidadTrasladoDelUsuario) throws VelocidadDeTrasladoCeroException {
+		if (velocidadTrasladoDelUsuario > 0) {
+			return getDistanciaEntreCoordenadas(c) / velocidadTrasladoDelUsuario;
+		}else{
+			throw new VelocidadDeTrasladoCeroException();
+		}
 	}
 
 }

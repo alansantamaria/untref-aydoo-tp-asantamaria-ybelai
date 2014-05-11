@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class CreadorDeSugerenciasTest {
+	
 	@Test
 	public void ordenarAtraccionesPorPrecioTest() {
 		Atraccion a1 = new Atraccion("Quinta", EnumTipoDeAtraccion.AVENTURA, 100, 100, new Coordenada(10,10), 100);
@@ -44,7 +45,7 @@ public class CreadorDeSugerenciasTest {
 		atracciones.add(a4);
 		atracciones.add(a5);
 
-		Perfil perfil = new Perfil(200, 300, 0, EnumTipoDeAtraccion.AVENTURA, new Coordenada(1, 9), new Coordenada(1, 9));
+		Perfil perfil = new Perfil(200, 300, 2, EnumTipoDeAtraccion.AVENTURA, new Coordenada(1, 9), new Coordenada(1, 9));
 		Usuario usuario = new Usuario("test", "123", perfil);
 
 		List<Atraccion> atraccionesConDescuento1 = new LinkedList<Atraccion>();
@@ -69,12 +70,12 @@ public class CreadorDeSugerenciasTest {
 	}
 
 	@Test
-	public void getPaqueteTest() {
+	public void getPaqueteTest() throws Exception {
 		Atraccion a1 = new Atraccion("Ultima", EnumTipoDeAtraccion.AVENTURA, 100, 100, new Coordenada(10,10), 100);
-		Atraccion a2 = new Atraccion("Primera", EnumTipoDeAtraccion.AVENTURA, 20, 150, new Coordenada(10,10), 100);
-		Atraccion a3 = new Atraccion("Tercera", EnumTipoDeAtraccion.AVENTURA, 50, 50, new Coordenada(10,10), 100);
-		Atraccion a4 = new Atraccion("Segunda", EnumTipoDeAtraccion.DEGUSTACION, 30, 100, new Coordenada(10,10), 100);
-		Atraccion a5 = new Atraccion("Cuarta", EnumTipoDeAtraccion.AVENTURA, 60, 100, new Coordenada(10,10), 100);
+		Atraccion a2 = new Atraccion("Primera", EnumTipoDeAtraccion.AVENTURA, 20, 150, new Coordenada(9,9), 100);
+		Atraccion a3 = new Atraccion("Tercera", EnumTipoDeAtraccion.AVENTURA, 50, 50, new Coordenada(8,8), 100);
+		Atraccion a4 = new Atraccion("Segunda", EnumTipoDeAtraccion.DEGUSTACION, 30, 100, new Coordenada(7,7), 100);
+		Atraccion a5 = new Atraccion("Cuarta", EnumTipoDeAtraccion.AVENTURA, 60, 100, new Coordenada(6,6), 100);
 		List<Atraccion> atracciones = new LinkedList<Atraccion>();
 		atracciones.add(a1);
 		atracciones.add(a2);
@@ -82,7 +83,7 @@ public class CreadorDeSugerenciasTest {
 		atracciones.add(a4);
 		atracciones.add(a5);
 
-		Perfil perfil = new Perfil(200, 500, 0, EnumTipoDeAtraccion.AVENTURA, new Coordenada(1, 9), new Coordenada(1, 9));
+		Perfil perfil = new Perfil(200, 500, 3, EnumTipoDeAtraccion.AVENTURA, new Coordenada(1, 9), new Coordenada(1, 9));
 		Usuario usuario = new Usuario("test", "123", perfil);
 
 		List<Atraccion> atraccionesConDescuento1 = new LinkedList<Atraccion>();
@@ -109,9 +110,8 @@ public class CreadorDeSugerenciasTest {
 		atraccionesControl.add(a1);
 		atraccionesControl.add(a5);
 		paqueteControl.setAtracciones(atraccionesControl);
-		
-		Assert.assertEquals(53.0, paquete.getPrecio(), 0001);
-		Assert.assertEquals(400.0, paquete.getDuracion(), 0001);
+		Assert.assertEquals(53.0, paquete.getPrecio(), 0.1);
+		Assert.assertEquals(403.7, paquete.getDuracion(), 0.1);
 		Assert.assertSame(atraccionesControl.get(0), paquete.getAtracciones().get(0));
 		Assert.assertSame(atraccionesControl.get(1), paquete.getAtracciones().get(1));
 		Assert.assertSame(atraccionesControl.get(2), paquete.getAtracciones().get(2));

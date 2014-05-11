@@ -3,6 +3,8 @@ package untref.tp.tierramedia;
 import org.junit.Assert;
 import org.junit.Test;
 
+import untref.tp.tierramedia.excepciones.VelocidadDeTrasladoCeroException;
+
 
 
 public class CoordenadaTest {
@@ -65,4 +67,22 @@ public class CoordenadaTest {
 		Assert.assertEquals(distancia, c1.getDistanciaEntreCoordenadas(c2), 001);
 	}
 	
+	@Test (expected = VelocidadDeTrasladoCeroException.class)  
+	public void siLaVelocidadDeTrasladoEsCeroElMetodoGetTiempoTrasladoEntreCoordenadasDebeDevolverUnaExcepcionDelTipoVelocidadDeTrasladoCeroException() throws VelocidadDeTrasladoCeroException {
+		Coordenada c1 = new Coordenada (1, 1);
+		Coordenada c2 = new Coordenada (2, 2);
+		int velocidadTraslado = 0;
+		c1.getTiempoTrasladoEntreCoordenadas(c2, velocidadTraslado);
+	}
+	
+	@Test 
+	public void siLaVelocidadDeTrasladoNoEsCeroElMetodoGetTiempoTrasladoEntreCoordenadasDebeDevolver1ParaVelocidadDeTraslado2() throws VelocidadDeTrasladoCeroException {
+		Coordenada c1 = new Coordenada (1, 1);
+		Coordenada c2 = new Coordenada (2, 2);
+		int velocidadTraslado = 2;
+		double tiempoTrasladoEntreCoordenadas = 0.7;
+		Assert.assertEquals(tiempoTrasladoEntreCoordenadas, c1.getTiempoTrasladoEntreCoordenadas(c2, velocidadTraslado), 0.1);
+	}
+
 }
+
