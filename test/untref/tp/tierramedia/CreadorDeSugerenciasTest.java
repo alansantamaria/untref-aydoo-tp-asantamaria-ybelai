@@ -127,7 +127,7 @@ public class CreadorDeSugerenciasTest {
 		Atraccion a4 = new Atraccion("Segunda", EnumTipoDeAtraccion.DEGUSTACION, 30, 100, new Coordenada(7,7), 100);
 		Atraccion a5 = new Atraccion("Cuarta", EnumTipoDeAtraccion.AVENTURA, 60, 100, new Coordenada(6,6), 100);
 		Atraccion a6 = new Atraccion("Sexta", EnumTipoDeAtraccion.AVENTURA, 60, 100, new Coordenada(2,2), 100);
-		Atraccion a7 = new Atraccion("Séptima", EnumTipoDeAtraccion.AVENTURA, 60, 100, new Coordenada(1,1), 100);
+		Atraccion a7 = new Atraccion("Septima", EnumTipoDeAtraccion.AVENTURA, 60, 100, new Coordenada(1,1), 100);
 		List<Atraccion> atracciones = new LinkedList<Atraccion>();
 		atracciones.add(a1);
 		atracciones.add(a2);
@@ -157,7 +157,7 @@ public class CreadorDeSugerenciasTest {
 		promocionesAXB.add(promAXB);
 		PromocionExtranjero promocionExtranjero = new PromocionExtranjero(Calendar.getInstance().getTime());
 		CreadorDeSugerencias CDS = new CreadorDeSugerencias (atracciones, promAbs, promocionesPorcentuales, promocionesAXB, promocionExtranjero);
-		/*Paquete paquete = CDS.getPaquete(usuario);
+		Paquete paquete = CDS.getPaquete(usuario);
 		Paquete paqueteControl = new Paquete();
 		List<Atraccion> atraccionesControl = new LinkedList<Atraccion>();
 		atraccionesControl.add(a2);
@@ -173,7 +173,7 @@ public class CreadorDeSugerenciasTest {
 		Assert.assertSame(atraccionesControl.get(2), paquete.getAtracciones().get(2));
 		Assert.assertSame(atraccionesControl.get(3), paquete.getAtracciones().get(3));
 		Assert.assertSame(atraccionesControl.get(4), paquete.getAtracciones().get(4));
-		Assert.assertSame(atraccionesControl.get(5), paquete.getAtracciones().get(5));*/
+		Assert.assertSame(atraccionesControl.get(5), paquete.getAtracciones().get(5));
 		
 	}
 }
