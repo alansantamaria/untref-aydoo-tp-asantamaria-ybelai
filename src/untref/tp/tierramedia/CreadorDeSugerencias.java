@@ -13,6 +13,7 @@ import untref.tp.tierramedia.excepciones.VelocidadDeTrasladoCeroException;
 public class CreadorDeSugerencias {
 	private List<Atraccion> atracciones;
 	private PromocionAbsoluta promocionAbsoluta;
+	private PromocionExtranjero promocionExtranjero;
 	private List<PromocionPorcentual> promocionesPorcentuales;
 	private List<PromocionAXB> promocionesAXB;
 	private final int distanciaMaxima = 10;
@@ -21,29 +22,35 @@ public class CreadorDeSugerencias {
 	public CreadorDeSugerencias(List<Atraccion> atracciones,
 			PromocionAbsoluta promocionAbsoluta,
 			List<PromocionPorcentual> promocionesPorcentuales,
-			List<PromocionAXB> promocionesAXB) {
+			List<PromocionAXB> promocionesAXB, PromocionExtranjero promocionExtranjero) {
 		this.atracciones = atracciones;
 		this.promocionAbsoluta = promocionAbsoluta;
 		this.promocionesPorcentuales = promocionesPorcentuales;
 		this.promocionesAXB = promocionesAXB;
+		this.promocionExtranjero = promocionExtranjero;
 	}
 
 	public Paquete getPaquete(Usuario usuario) throws Exception {
 
 		Paquete paquete = new Paquete();
-		
+
 		List<Atraccion> atraccionesSugeridas = getSugerenciasParaVisitar(usuario);
-		aplicarDescuentoPorcentualAAtracciones(atraccionesSugeridas);
-		
-		List<Atraccion> atraccionesGratisPorPromocionAXB = getPromocionesGratisPorAXB(atraccionesSugeridas);
 
-		agregarAtraccionesSugeridasAlPaquete(paquete, atraccionesSugeridas, usuario.getPerfil());
-		agregarAtraccionesGratisPorPromocionesAXB(paquete, atraccionesGratisPorPromocionAXB, usuario.getPerfil());
+		if (promocionExtranjero == null || 
+				!promocionExtranjero.seAplicaPromocion(usuario.getPerfil().getDistanciaALaAtraccionMasCercanaAlDomicilio(atracciones))) {
 
-
-		if (promocionAbsoluta != null) {
-			promocionAbsoluta.aplicarDescuento(paquete);
+			aplicarDescuentoPorcentualAAtracciones(atraccionesSugeridas);
+			List<Atraccion> atraccionesGratisPorPromocionAXB = getPromocionesGratisPorAXB(atraccionesSugeridas);
+			agregarAtraccionesSugeridasAlPaquete(paquete, atraccionesSugeridas, usuario.getPerfil());
+			agregarAtraccionesGratisPorPromocionesAXB(paquete, atraccionesGratisPorPromocionAXB, usuario.getPerfil());
+			if (promocionAbsoluta != null) {
+				promocionAbsoluta.aplicarDescuento(paquete);
+			}
+		}else{
+			promocionExtranjero.aplicarDescuento(atraccionesSugeridas);
+			agregarAtraccionesSugeridasAlPaquete(paquete, atraccionesSugeridas, usuario.getPerfil());
 		}
+
 		return paquete;
 	}
 
@@ -51,7 +58,7 @@ public class CreadorDeSugerencias {
 	 *1) se ordenan las atracciones de menor a mayor precio.
 	 *2) se descartan aquellas atracciones que no son preferidas por el usuario.
 	 *3) se descartan aquellas atracciones que se encuentran fuera de una distancia establecida respecto a la ubicacion del usuario.
-	 *4) se selecciones aquellas que tienen descuentos porcentuales por promocion
+	 *4) en el caso que no se aplique la promocion por extranjero se seleccionan aquellas que tienen descuentos porcentuales por promocion 
 	 */
 	public List<Atraccion> getSugerenciasParaVisitar(Usuario usuario) {
 		List<Atraccion> atraccionesPreSeleccionadas = atracciones;
@@ -61,11 +68,18 @@ public class CreadorDeSugerencias {
 
 		filtrarPorCercania(usuario.getPerfil().getUbicacion(), atraccionesPreSeleccionadas);
 
-		List<Atraccion> atraccionesConDescuento = getAtraccionesConDescuentoPorcentual(atraccionesPreSeleccionadas);
+		if (promocionExtranjero == null || 
+				!promocionExtranjero.seAplicaPromocion(usuario.getPerfil().getDistanciaALaAtraccionMasCercanaAlDomicilio(atracciones))) {
 
-		ordenarAtraccionesPorPrecio(atraccionesConDescuento);
-		
-		return atraccionesConDescuento;
+			List<Atraccion> atraccionesConDescuento = getAtraccionesConDescuentoPorcentual(atraccionesPreSeleccionadas);
+			ordenarAtraccionesPorPrecio(atraccionesConDescuento);
+			return atraccionesConDescuento;
+		}else{
+			ordenarAtraccionesPorPrecio(atraccionesPreSeleccionadas);
+			return atraccionesPreSeleccionadas;
+		}
+
+
 	}
 
 
@@ -141,15 +155,19 @@ public class CreadorDeSugerencias {
 		ListIterator<Atraccion> iter = atraccionesSugeridas.listIterator();
 		while (iter.hasNext()) {
 			Atraccion atraccion = iter.next();
-			if (iter.hasPrevious()) {
-				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(atracciones.get(iter.previousIndex()).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
+			if (!paquete.getAtracciones().isEmpty()) {
+				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
 			}else{
 				paquete.addAtraccion(atraccion, 0.0);
 			}
 
 
 			if (paquete.getDuracion() > perfil.getTiempoDisponibleParaVisitas() || paquete.getPrecio() > perfil.getPresupuesto()) {
-				paquete.getAtracciones().remove(atraccion);
+				if (iter.hasPrevious()) {
+					paquete.removeAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
+				}else{
+					paquete.removeAtraccion(atraccion, 0.0);
+				}
 			}
 
 		}
@@ -167,7 +185,11 @@ public class CreadorDeSugerencias {
 
 
 			if (paquete.getDuracion() > perfil.getTiempoDisponibleParaVisitas()) {
-				paquete.getAtracciones().remove(atraccion);
+				if (iter.hasPrevious()) {
+					paquete.removeAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
+				}else{
+					paquete.removeAtraccion(atraccion, 0.0);
+				}
 			}
 
 		}

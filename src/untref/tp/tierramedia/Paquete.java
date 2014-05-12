@@ -7,7 +7,7 @@ public class Paquete {
 	private List<Atraccion> atracciones;
 	private Double duracion;
 	private Double precio;
-	
+
 	public Paquete(List<Atraccion> atracciones, Double duracion, Double precio) {
 		this.atracciones = atracciones;
 		this.duracion = duracion;
@@ -23,32 +23,38 @@ public class Paquete {
 	public List<Atraccion> getAtracciones() {
 		return atracciones;
 	}
-	
+
 	public void setAtracciones(List<Atraccion> atracciones) {
 		this.atracciones = atracciones;
 	}
-	
+
 	public Double getDuracion() {
 		return duracion;
 	}
-	
+
 	public void setDuracion(double d) {
 		this.duracion = d;
 	}
-	
+
 	public Double getPrecio() {
 		return precio;
 	}
-	
+
 	public void setPrecio(double d) {
 		this.precio = d;
 	}
-	
+
 	public void addAtraccion(Atraccion atraccion, double duracionViaje) {
 		precio += atraccion.getCosto();
 		duracion += atraccion.getTiempo();
 		duracion += duracionViaje;
 		this.atracciones.add(atraccion);
 	}
-	
+
+	public void removeAtraccion(Atraccion atraccion, double duracionViaje) {
+		atracciones.remove(atraccion);
+		precio -= atraccion.getCosto();
+		duracion -= duracionViaje;
+		duracion -= atraccion.getTiempo();
+	}
 }

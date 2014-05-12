@@ -1,5 +1,8 @@
 package untref.tp.tierramedia;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,5 +45,19 @@ public class PerfilTest {
 				perfil1.getPresupuesto());
 	}
 	
-
+	@Test
+	public void getDistanciaALaAtraccionMasCercanaAlDomicilioDebeDevolverLaDistanciaDeLaAtraccionConNombrePrimera() {
+		Perfil perfil = new Perfil(0, 0, 0, null, null, new Coordenada(10,10));
+		
+		Atraccion a1 = new Atraccion("Primera", EnumTipoDeAtraccion.AVENTURA, 0, 0, new Coordenada(9,9), 0);
+		Atraccion a2 = new Atraccion("Segunda", EnumTipoDeAtraccion.AVENTURA, 0, 0, new Coordenada(3,3), 0);
+		Atraccion a3 = new Atraccion("Tercera", EnumTipoDeAtraccion.AVENTURA, 0, 0, new Coordenada(5,5), 0);
+		List<Atraccion> atracciones = new LinkedList<Atraccion>();
+		atracciones.add(a1);
+		atracciones.add(a2);
+		atracciones.add(a3);
+		
+		double distanciaALaAtraccionMasCercana = 1.4;
+		Assert.assertEquals(distanciaALaAtraccionMasCercana, perfil.getDistanciaALaAtraccionMasCercanaAlDomicilio(atracciones), 0.1);
+	}
 }

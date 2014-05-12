@@ -1,5 +1,7 @@
 package untref.tp.tierramedia;
 
+import java.util.List;
+
 public class Perfil {
 	private int presupuesto;
 	private int tiempoDisponibleParaVisitas;
@@ -68,4 +70,13 @@ public class Perfil {
 		this.domicilio = domicilio;
 	}
 	
+	public Double getDistanciaALaAtraccionMasCercanaAlDomicilio(List<Atraccion> atracciones) {
+		double distanciaALaAtraccionMasCercana = 20000.0;
+		for (Atraccion atraccion : atracciones) {
+			if (distanciaALaAtraccionMasCercana > domicilio.getDistanciaEntreCoordenadas(atraccion.getPosicionamiento())) {
+				distanciaALaAtraccionMasCercana = domicilio.getDistanciaEntreCoordenadas(atraccion.getPosicionamiento());
+			}
+		}
+		return distanciaALaAtraccionMasCercana;
+	}
 }
