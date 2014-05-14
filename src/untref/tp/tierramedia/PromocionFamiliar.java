@@ -27,7 +27,7 @@ public class PromocionFamiliar extends Promocion {
 		return precio;
 	}
 
-	public boolean seAplicaPromoción (Paquete paquete) {
+	public boolean seAplicaPromocion (Paquete paquete) {
 		if (paquete.getCantidadEntradas() >= umbralDeEntradas) {
 			return true;
 		}else{
