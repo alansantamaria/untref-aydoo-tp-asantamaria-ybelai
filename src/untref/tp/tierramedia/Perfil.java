@@ -9,16 +9,18 @@ public class Perfil {
 	private EnumTipoDeAtraccion tipoDeAtraccionFavorita;
 	private Coordenada ubicacion;
 	private Coordenada domicilio;
+	private int cantidadDeEntradas;
 	
 	public Perfil(int presupuesto, int tiempoDisponibleParaVisitas,
 			int velocidadDeTranslado,
-			EnumTipoDeAtraccion tipoDeAtraccionFavorita, Coordenada ubicacion, Coordenada domicilio) {
+			EnumTipoDeAtraccion tipoDeAtraccionFavorita, Coordenada ubicacion, Coordenada domicilio, int cantidadDeEntradas) {
 		this.presupuesto = presupuesto;
 		this.tiempoDisponibleParaVisitas = tiempoDisponibleParaVisitas;
 		this.velocidadDeTranslado = velocidadDeTranslado;
 		this.tipoDeAtraccionFavorita = tipoDeAtraccionFavorita;
 		this.ubicacion = ubicacion;
 		this.domicilio = domicilio;
+		this.cantidadDeEntradas = cantidadDeEntradas;
 	}
 	
 	public int getPresupuesto() {
@@ -70,6 +72,14 @@ public class Perfil {
 		this.domicilio = domicilio;
 	}
 	
+	public int getCandidadDeEntradas() {
+		return cantidadDeEntradas;
+	}
+	
+	public void setCandidadDeEntradas(int cantidadDeEntradas) {
+		this.cantidadDeEntradas = cantidadDeEntradas;
+	}
+	
 	public Double getDistanciaALaAtraccionMasCercanaAlDomicilio(List<Atraccion> atracciones) {
 		double distanciaALaAtraccionMasCercana = 20000.0;
 		for (Atraccion atraccion : atracciones) {
@@ -79,4 +89,5 @@ public class Perfil {
 		}
 		return distanciaALaAtraccionMasCercana;
 	}
+
 }

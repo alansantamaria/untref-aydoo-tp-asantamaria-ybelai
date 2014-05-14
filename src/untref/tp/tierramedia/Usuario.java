@@ -1,11 +1,11 @@
 package untref.tp.tierramedia;
 
 public class Usuario {
-	
+
 	private String nombreUsuario;
 	private String contrasenia;
 	private Perfil perfil;
-	
+
 	public Usuario(String nombreUsuario, String contrasenia, Perfil perfil) {
 		this.nombreUsuario = nombreUsuario;
 		this.contrasenia = contrasenia;
@@ -35,5 +35,5 @@ public class Usuario {
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
 	}
-	
+
 }

@@ -28,14 +28,14 @@ public class PromocionPorcentual extends Promocion {
 	public void setAtracciones(List<Atraccion> atracciones) {
 		this.atracciones = atracciones;
 	}
-	
+
 	public boolean tieneDescuento(Atraccion atraccion) {
 		return this.atracciones.contains(atraccion);
 	}
-	
+
 	public Atraccion calcularDescuento(Atraccion atraccion) {
-		 atraccion.setCosto((atraccion.getCosto()) - ((atraccion.getCosto() * porcentaje) / 100));
-		 atraccion.setSeAplicoPromocion(true);
-		 return atraccion;
+		atraccion.setCosto((atraccion.getCosto()) - ((atraccion.getCosto() * porcentaje) / 100));
+		atraccion.setSeAplicoPromocion(true);
+		return atraccion;
 	}
 }

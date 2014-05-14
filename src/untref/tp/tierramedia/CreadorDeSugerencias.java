@@ -13,6 +13,7 @@ import untref.tp.tierramedia.excepciones.VelocidadDeTrasladoCeroException;
 public class CreadorDeSugerencias {
 	private List<Atraccion> atracciones;
 	private PromocionAbsoluta promocionAbsoluta;
+	private PromocionFamiliar promocionFamiliar;
 	private PromocionExtranjero promocionExtranjero;
 	private List<PromocionPorcentual> promocionesPorcentuales;
 	private List<PromocionAXB> promocionesAXB;
@@ -22,17 +23,19 @@ public class CreadorDeSugerencias {
 	public CreadorDeSugerencias(List<Atraccion> atracciones,
 			PromocionAbsoluta promocionAbsoluta,
 			List<PromocionPorcentual> promocionesPorcentuales,
-			List<PromocionAXB> promocionesAXB, PromocionExtranjero promocionExtranjero) {
+			List<PromocionAXB> promocionesAXB, PromocionExtranjero promocionExtranjero, PromocionFamiliar promocionFamiliar) {
 		this.atracciones = atracciones;
 		this.promocionAbsoluta = promocionAbsoluta;
 		this.promocionesPorcentuales = promocionesPorcentuales;
 		this.promocionesAXB = promocionesAXB;
 		this.promocionExtranjero = promocionExtranjero;
+		this.promocionFamiliar = promocionFamiliar;
 	}
 
 	public Paquete getPaquete(Usuario usuario) throws Exception {
 
 		Paquete paquete = new Paquete();
+		paquete.setCantidadEntradas(usuario.getPerfil().getCandidadDeEntradas());
 
 		List<Atraccion> atraccionesSugeridas = getSugerenciasParaVisitar(usuario);
 
@@ -156,9 +159,9 @@ public class CreadorDeSugerencias {
 		while (iter.hasNext()) {
 			Atraccion atraccion = iter.next();
 			if (!paquete.getAtracciones().isEmpty()) {
-				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
+				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()), promocionFamiliar, perfil);
 			}else{
-				paquete.addAtraccion(atraccion, 0.0);
+				paquete.addAtraccion(atraccion, 0.0, promocionFamiliar, perfil);
 			}
 
 
@@ -178,9 +181,9 @@ public class CreadorDeSugerencias {
 		while (iter.hasNext()) {
 			Atraccion atraccion = iter.next();
 			if (!paquete.getAtracciones().isEmpty()) {
-				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()));
+				paquete.addAtraccion(atraccion, atraccion.getPosicionamiento().getTiempoTrasladoEntreCoordenadas(paquete.getAtracciones().get(paquete.getAtracciones().size() - 1).getPosicionamiento(), perfil.getVelocidadDeTranslado()), null, perfil);
 			}else{
-				paquete.addAtraccion(atraccion, 0.0);
+				paquete.addAtraccion(atraccion, 0.0, null, perfil);
 			}
 
 
@@ -194,4 +197,5 @@ public class CreadorDeSugerencias {
 
 		}
 	}
+
 }

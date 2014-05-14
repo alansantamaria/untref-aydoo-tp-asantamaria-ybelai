@@ -2,10 +2,9 @@ package untref.tp.tierramedia;
 
 import org.junit.Test;
 
-public class PromocionAXBTest {
+public class PromocionFamiliarTest {
 	@Test
 	public void probar(){
 
 	}
-
 }

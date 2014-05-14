@@ -9,11 +9,11 @@ public class PromocionExtranjero extends Promocion {
 	public PromocionExtranjero(Date vigencia) {
 		super(vigencia);
 	}
-	
+
 	public boolean seAplicaPromocion(double distanciaDelDomicilioALaAtraccionMasCercana) {
 		return distanciaDelDomicilioALaAtraccionMasCercana >= distanciaRequerida;
 	}
-	
+
 	public void aplicarDescuento(List<Atraccion> atracciones) {
 		for (Atraccion atraccion : atracciones) {
 			atraccion.setCosto((atraccion.getCosto() * descuento) / 100);

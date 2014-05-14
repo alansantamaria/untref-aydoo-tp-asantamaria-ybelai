@@ -12,7 +12,7 @@ public class PerfilTest {
 	Coordenada domicilio = new Coordenada(20, 30);
 	EnumTipoDeAtraccion tipoDeAtraccionFavorita = EnumTipoDeAtraccion.DEGUSTACION;
 	Perfil perfil1 = new Perfil(1000, 20, 100, tipoDeAtraccionFavorita,
-			ubicacion, domicilio);
+			ubicacion, domicilio, 1);
 
 	@Test
 	public void deberiaDevolver20SiTiempoDisponibleParaVisitasEs20() {
@@ -47,7 +47,7 @@ public class PerfilTest {
 	
 	@Test
 	public void getDistanciaALaAtraccionMasCercanaAlDomicilioDebeDevolverLaDistanciaDeLaAtraccionConNombrePrimera() {
-		Perfil perfil = new Perfil(0, 0, 0, null, null, new Coordenada(10,10));
+		Perfil perfil = new Perfil(0, 0, 0, null, null, new Coordenada(10,10), 1);
 		
 		Atraccion a1 = new Atraccion("Primera", EnumTipoDeAtraccion.AVENTURA, 0, 0, new Coordenada(9,9), 0);
 		Atraccion a2 = new Atraccion("Segunda", EnumTipoDeAtraccion.AVENTURA, 0, 0, new Coordenada(3,3), 0);

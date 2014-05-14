@@ -6,7 +6,7 @@ import java.util.Date;
 
 public abstract class Promocion {
 	private Date vigencia;
-	
+
 	public Promocion(Date vigencia) {
 		this.vigencia = vigencia;
 	}
@@ -18,7 +18,7 @@ public abstract class Promocion {
 	public void setVigencia(Date vigencia) {
 		this.vigencia = vigencia;
 	}
-	
+
 	public boolean estaVigente() {
 		return Calendar.getInstance().getTime().after(vigencia) ;
 	}
