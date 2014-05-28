@@ -38,7 +38,6 @@ public class CreadorDeSugerencias {
 		paquete.setCantidadEntradas(usuario.getPerfil().getCandidadDeEntradas());
 
 		List<Atraccion> atraccionesSugeridas = getSugerenciasParaVisitar(usuario);
-
 		if (promocionExtranjero == null || 
 				!promocionExtranjero.seAplicaPromocion(usuario.getPerfil().getDistanciaALaAtraccionMasCercanaAlDomicilio(atracciones))) {
 
@@ -68,7 +67,6 @@ public class CreadorDeSugerencias {
 
 
 		filtrarPorTipoDeAtraccionPreferidaDelUsuario(usuario.getPerfil().getTipoDeAtraccionFavorita(), atraccionesPreSeleccionadas);
-
 		filtrarPorCercania(usuario.getPerfil().getUbicacion(), atraccionesPreSeleccionadas);
 
 		if (promocionExtranjero == null || 
@@ -120,7 +118,7 @@ public class CreadorDeSugerencias {
 
 
 
-	public void ordenarAtraccionesPorPrecio(List<Atraccion> atracciones) {
+	public synchronized void ordenarAtraccionesPorPrecio(List<Atraccion> atracciones) {
 		Collections.sort(atracciones, new Comparator<Atraccion>() {
 			public int compare(Atraccion o1, Atraccion o2) {
 				if (o1.getCosto() == o2.getCosto())

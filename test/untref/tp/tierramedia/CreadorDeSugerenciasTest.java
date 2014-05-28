@@ -1,13 +1,25 @@
 package untref.tp.tierramedia;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+
 public class CreadorDeSugerenciasTest {
+	
+	Date tomorrow;
+	
+	@Before
+	public void setDate() {
+		Calendar today = Calendar.getInstance();
+		today.add(Calendar.DATE, 1);
+		tomorrow = today.getTime();
+	}
 	
 	@Test
 	public void ordenarAtraccionesPorPrecioTest() {
@@ -31,7 +43,7 @@ public class CreadorDeSugerenciasTest {
 		Assert.assertEquals("Quinta", atracciones.get(4).getNombre());
 	}
 	
-	@Test
+    @Test
 	public void getSugerenciasParaVisitarTest() {
 		Atraccion a1 = new Atraccion("Ultima", EnumTipoDeAtraccion.AVENTURA, 100, 100, new Coordenada(10,10), 100);
 		Atraccion a2 = new Atraccion("Primera", EnumTipoDeAtraccion.AVENTURA, 20, 150, new Coordenada(10,10), 100);
@@ -54,8 +66,8 @@ public class CreadorDeSugerenciasTest {
 		List<Atraccion> atraccionesConDescuento2 = new LinkedList<Atraccion>();
 		atraccionesConDescuento2.add(a3);
 		atraccionesConDescuento2.add(a4);
-		PromocionPorcentual p1 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento1, 10.0);
-		PromocionPorcentual p2 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento2, 10.0);
+		PromocionPorcentual p1 = new PromocionPorcentual(tomorrow, atraccionesConDescuento1, 10.0);
+		PromocionPorcentual p2 = new PromocionPorcentual(tomorrow, atraccionesConDescuento2, 10.0);
 		List<PromocionPorcentual> promocionesPorcentuales = new LinkedList<PromocionPorcentual>();
 		promocionesPorcentuales.add(p1);
 		promocionesPorcentuales.add(p2);
@@ -92,16 +104,16 @@ public class CreadorDeSugerenciasTest {
 		List<Atraccion> atraccionesConDescuento2 = new LinkedList<Atraccion>();
 		atraccionesConDescuento2.add(a3);
 		atraccionesConDescuento2.add(a4);
-		PromocionPorcentual p1 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento1, 10.0);
-		PromocionPorcentual p2 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento2, 10.0);
+		PromocionPorcentual p1 = new PromocionPorcentual(tomorrow, atraccionesConDescuento1, 10.0);
+		PromocionPorcentual p2 = new PromocionPorcentual(tomorrow, atraccionesConDescuento2, 10.0);
 		List<PromocionPorcentual> promocionesPorcentuales = new LinkedList<PromocionPorcentual>();
 		promocionesPorcentuales.add(p1);
 		promocionesPorcentuales.add(p2);
-		PromocionAbsoluta promAbs = new PromocionAbsoluta(Calendar.getInstance().getTime(), 100.0);
-		PromocionAXB promAXB = new PromocionAXB(Calendar.getInstance().getTime(), atraccionesConDescuento1, a5);
+		PromocionAbsoluta promAbs = new PromocionAbsoluta(tomorrow, 100.0);
+		PromocionAXB promAXB = new PromocionAXB(tomorrow, atraccionesConDescuento1, a5);
 		List<PromocionAXB> promocionesAXB = new LinkedList<PromocionAXB>();
 		promocionesAXB.add(promAXB);
-		PromocionFamiliar promocionFamiliar = new PromocionFamiliar(Calendar.getInstance().getTime());
+		PromocionFamiliar promocionFamiliar = new PromocionFamiliar(tomorrow);
 		CreadorDeSugerencias CDS = new CreadorDeSugerencias (atracciones, promAbs, promocionesPorcentuales, promocionesAXB, null, promocionFamiliar);
 		Paquete paquete = CDS.getPaquete(usuario);
 		Paquete paqueteControl = new Paquete();
@@ -147,17 +159,17 @@ public class CreadorDeSugerenciasTest {
 		List<Atraccion> atraccionesConDescuento2 = new LinkedList<Atraccion>();
 		atraccionesConDescuento2.add(a3);
 		atraccionesConDescuento2.add(a4);
-		PromocionPorcentual p1 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento1, 10.0);
-		PromocionPorcentual p2 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento2, 10.0);
+		PromocionPorcentual p1 = new PromocionPorcentual(tomorrow, atraccionesConDescuento1, 10.0);
+		PromocionPorcentual p2 = new PromocionPorcentual(tomorrow, atraccionesConDescuento2, 10.0);
 		List<PromocionPorcentual> promocionesPorcentuales = new LinkedList<PromocionPorcentual>();
 		promocionesPorcentuales.add(p1);
 		promocionesPorcentuales.add(p2);
-		PromocionAbsoluta promAbs = new PromocionAbsoluta(Calendar.getInstance().getTime(), 100.0);
-		PromocionAXB promAXB = new PromocionAXB(Calendar.getInstance().getTime(), atraccionesConDescuento1, a5);
+		PromocionAbsoluta promAbs = new PromocionAbsoluta(tomorrow, 100.0);
+		PromocionAXB promAXB = new PromocionAXB(tomorrow, atraccionesConDescuento1, a5);
 		List<PromocionAXB> promocionesAXB = new LinkedList<PromocionAXB>();
 		promocionesAXB.add(promAXB);
-		PromocionExtranjero promocionExtranjero = new PromocionExtranjero(Calendar.getInstance().getTime());
-		PromocionFamiliar promocionFamiliar = new PromocionFamiliar(Calendar.getInstance().getTime());
+		PromocionExtranjero promocionExtranjero = new PromocionExtranjero(tomorrow);
+		PromocionFamiliar promocionFamiliar = new PromocionFamiliar(tomorrow);
 		CreadorDeSugerencias CDS = new CreadorDeSugerencias (atracciones, promAbs, promocionesPorcentuales, promocionesAXB, promocionExtranjero, promocionFamiliar);
 		Paquete paquete = CDS.getPaquete(usuario);
 		Paquete paqueteControl = new Paquete();
@@ -205,17 +217,17 @@ public class CreadorDeSugerenciasTest {
 		List<Atraccion> atraccionesConDescuento2 = new LinkedList<Atraccion>();
 		atraccionesConDescuento2.add(a3);
 		atraccionesConDescuento2.add(a4);
-		PromocionPorcentual p1 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento1, 10.0);
-		PromocionPorcentual p2 = new PromocionPorcentual(Calendar.getInstance().getTime(), atraccionesConDescuento2, 10.0);
+		PromocionPorcentual p1 = new PromocionPorcentual(tomorrow, atraccionesConDescuento1, 10.0);
+		PromocionPorcentual p2 = new PromocionPorcentual(tomorrow, atraccionesConDescuento2, 10.0);
 		List<PromocionPorcentual> promocionesPorcentuales = new LinkedList<PromocionPorcentual>();
 		promocionesPorcentuales.add(p1);
 		promocionesPorcentuales.add(p2);
-		PromocionAbsoluta promAbs = new PromocionAbsoluta(Calendar.getInstance().getTime(), 100.0);
-		PromocionAXB promAXB = new PromocionAXB(Calendar.getInstance().getTime(), atraccionesConDescuento1, a5);
+		PromocionAbsoluta promAbs = new PromocionAbsoluta(tomorrow, 100.0);
+		PromocionAXB promAXB = new PromocionAXB(tomorrow, atraccionesConDescuento1, a5);
 		List<PromocionAXB> promocionesAXB = new LinkedList<PromocionAXB>();
 		promocionesAXB.add(promAXB);
-		PromocionExtranjero promocionExtranjero = new PromocionExtranjero(Calendar.getInstance().getTime());
-		PromocionFamiliar promocionFamiliar = new PromocionFamiliar(Calendar.getInstance().getTime());
+		PromocionExtranjero promocionExtranjero = new PromocionExtranjero(tomorrow);
+		PromocionFamiliar promocionFamiliar = new PromocionFamiliar(tomorrow);
 		CreadorDeSugerencias CDS = new CreadorDeSugerencias (atracciones, promAbs, promocionesPorcentuales, promocionesAXB, promocionExtranjero, promocionFamiliar);
 		Paquete paquete = CDS.getPaquete(usuario);
 		Paquete paqueteControl = new Paquete();

@@ -20,6 +20,6 @@ public abstract class Promocion {
 	}
 
 	public boolean estaVigente() {
-		return Calendar.getInstance().getTime().after(vigencia) ;
+		return Calendar.getInstance().getTime().before(vigencia) ;
 	}
 }
